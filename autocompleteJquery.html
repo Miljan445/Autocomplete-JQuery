@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="mainHolder">
+        <h2 id="main">  STATE CAPITAL LOOKUP</h2>
+        <input type="search" id="value">
+        </div>
+        <div id="output"></div>
+        <style>
+       
+            .mainHolder{
+                background-color:gray;
+                padding-bottom: 20px;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            #main{
+                color: white;
+                padding-bottom: 20px;
+                padding-top: 20px;
+                
+            }
+            h2{
+                text-align: center;
+            }
+            input{
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .output{
+                margin: 0 auto;
+            }
+            body{
+                background-color: black;
+            }
+            #holder:nth-child(odd){
+               background-color: lightgrey;
+               height: auto;
+               padding-top: 20px;
+               padding-bottom: 20px;
+               margin-bottom: 10px;
+               margin-top: 10px;
+               border-radius: 20px;
+            }
+            #holder:nth-child(even){
+                background-color: lightgrey;
+                height: auto;
+                padding-top: 20px;
+                padding-bottom: 20px;
+                border-radius: 20px;
+    
+            }
+            p{
+                margin: 0;
+                text-align: center;
+            
+            }
+            h2{
+                margin: 0;
+            }
+            h3{
+                margin: 0;
+                text-align: center;
+            }
+            #holder p {
+                padding: 20px 0 5px 0;
+            }
+            #info{
+                height: 50%;
+                width: 80%;
+                margin: 0 auto;
+                background-color: cadetblue;
+                color: white;
+                padding: 30px;
+                border-radius: 20px;
+                text-align: center;
+            }
+        </style>
+        <script>
+let value = $("#value");
+$(document).ready(()=>{
+    $("#value").on("input",()=>{
+        $.getJSON("USCities.json",(data)=>{
+            console.log(data)
+            $.each(data,function(index,item){
+                if(item.city.toUpperCase().indexOf(value.val().toUpperCase())>-1){
+$("#output").html(
+    `
+    <div id = "holder">
+<h3>${item.city}</h3>
+<p>Get the County</p>
+</div>
+`
+)
+$("p").click(()=>{
+$("#output").append(
+    `
+    <div id="info">
+    <h4>This state capitol belogns to the couty of ${item.county}</h4>
+    </div>
+    `)
+})
+if($("#value").val()===""){
+    $("#output").empty();
+}
+                }
+            })
+        })
+    })
+})
+        </script>
+</body>
+</html>
